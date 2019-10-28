@@ -1,0 +1,6 @@
+"1", "Móveis", "QHV-6984"
+"1", "Roupas", "QHV-6984"
+"1", "Eletrônicos", "QHV-6984"
+"2", "Alimentos", "MJD-9863"
+"2", "Ferramentas", "MJD-9863"
+Está salvando nesse diretório:	C:/TXT/Teste.txt
