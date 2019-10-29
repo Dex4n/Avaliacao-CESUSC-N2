@@ -9,7 +9,7 @@ public class Entrega {
 	private String placaVeiculo;
 	
 	public Entrega() {
-		
+		super();
 	}
 
 	public int getCodigoEntrega() {
