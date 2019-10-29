@@ -3,12 +3,10 @@ package transportadora.n2;
 public class Veiculo {
 	
 	private int codigoVeiculo;
-	private String placaVeiculo; //(Comparação através do .equals("QHV6984"))
+	private String placaVeiculo;
 	private String nomeVeiculo;
 	private String marcaVeiculo;
 	private int anoVeiculo;
-	
-	private ControleCadastro controleCadastro;
 	
 	public Veiculo() {
 		

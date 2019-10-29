@@ -14,6 +14,7 @@ import java.awt.event.MouseEvent;
 
 public class CadastroVeiculo extends JDialog {
 
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtCodigoVeiculo;
 	private JTextField txtPlacaVeiculo;
@@ -102,7 +103,9 @@ public class CadastroVeiculo extends JDialog {
 						if(!validaFormulario()) {
 							JOptionPane.showMessageDialog(null, "Os campos de <Código, Produto, Destino, Distância e Placa> obrigatoriamente devem estar preenchidos!");
 						} else {
-							cadastroVeiculo();			
+							cadastroVeiculo();		
+							controleCadastro.salvarCadastroVeiculos();
+							setVisible(false);
 						}	
 					}
 				});

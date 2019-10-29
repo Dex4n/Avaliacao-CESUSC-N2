@@ -106,7 +106,9 @@ public class CadastroEntrega extends JDialog {
 						if(!validaFormulario()) {
 							JOptionPane.showMessageDialog(null, "Os campos de <Código, Produto, Destino, Distância e Placa> obrigatoriamente devem estar preenchidos!");
 						} else {
-							cadastroEntrega();					
+							cadastroEntrega();		
+							controleCadastro.salvarCadastroEntregas();
+							setVisible(false);
 						}		
 					}
 				});
@@ -154,6 +156,17 @@ public class CadastroEntrega extends JDialog {
 			minhaEntrega.setDistanciaEntrega(Double.parseDouble(txtDistanciaEntrega.getText()));
 			minhaEntrega.setPlacaVeiculo(txtPlacaVeiculoEntrega.getText());
 			controleCadastro.adicionaEntrega(minhaEntrega);
+			// Início da implementação de verificação se já existe um cadastro com o nº de placa informado para gerar o relatório
+			
+			
+			for (int i=0; i<controleCadastro.getSizeListaEntregas(); i++) {
+				if (minhaEntrega.getPlacaVeiculo().equals(txtPlacaVeiculoEntrega.getText())) {
+					//controleCadastro.getListaEntregas()
+					
+				}
+			}
+
+			
 			JOptionPane.showMessageDialog(null, "Sucesso ao cadastrar uma entrega!");
 		} catch (Exception e) 
 		{
