@@ -11,45 +11,47 @@ import javax.swing.JOptionPane;
 public class ControleCadastro
 {
 	
-	//private static ArrayList<Entrega> listaEntregasPlaca;
-	private static ArrayList<Veiculo> listaVeiculos;
-	private static ArrayList<Entrega> listaEntregas;
+	private ArrayList<Veiculo> listaVeiculos;
+	private ArrayList<Entrega> listaEntregas;
 	private String listagemArquivoVeiculos;
-	//= new String[listaVeiculos.size()];
 	private String listagemArquivoEntregas;
-	//= new String[listaEntregas.size()];
 	
+	/*
 	private Double mediaDistanciaEntregas;
 	private int quantidadeEntregas;
 	private String placaVeiculoEntrega;
-	
+	*/
 
 	public ControleCadastro() 
 	{
 		super();
-		//listaEntregasPlaca = new ArrayList<Entrega>();
 		listaEntregas = new ArrayList<Entrega>();
 		listaVeiculos = new ArrayList<Veiculo>();
 	}
 	
 	/*
-	public void adicionaEntregaPlaca(Entrega e) 
+	public void geraRelatorioEntregaPlaca(Entrega e) 
 	{
 		listaEntregasPlaca.add(e);
 		for (int i=0; i < listaEntregasPlaca.size(); i++) 
 		{
 			if (listaEntregasPlaca.get(i).getPlacaVeiculo().equals("QHV6984")) 	
 			{
-				
 				getDistancia[0] = 10
-				getDistancia[1] = 5
-				contador = 2;
+				contador[0] = 1
+				getDistancia[1] = 10
+				contador[1] = 1
 				
-				Total = 15
-				Total / Contador = Média;
+				getPlaca[0] == getPlaca[1]
 				
+				totalEntregas = contador[0] + contador[1]
 				
+				soma[i] += getDistancia[i] + getDistancia[i+1]
 				
+				soma = 20
+				totalEntregas = 2
+				valorMediaDistancia = 20 / 2;
+
 			}
 		}
 		//quantidadeEntregas += 1; Esta soma deve ser realizada quando o sistema encontrar todos os cadastros de entrega realizados através de um veículo, ou seja, pela placa.
@@ -106,6 +108,23 @@ public class ControleCadastro
 		return matAux;
 	}
 	
+	public String[] getListaEntregasPlaca()
+	{
+		String [] matAux = new String[getSizeListaEntregas()];
+		for (int j=0; j<listaEntregas.size(); j++) 
+		{ 		
+		    String aux;
+			aux = listaEntregas.get(j).getPlacaVeiculo() + "\n" + listaEntregas.get(j).getDistanciaEntrega();
+			//aux[1] = listaEntregas.get(j).getDistanciaEntrega() + "";
+			matAux[j] = aux;
+		}
+		return matAux;
+	}
+	
+	
+	
+	
+	
 	public String[][] getListaVeiculos()
 	{
 		String [][] matAux = new String[listaVeiculos.size()][3];
@@ -138,13 +157,13 @@ public class ControleCadastro
 		    	}
 
 		    	listaVeiculos += linha + "\n";
-		    	setListagemArquivoVeiculos(listaVeiculos+" |\n".toString());
-			    JOptionPane.showMessageDialog(null, listaVeiculos);
+		    	setListagemArquivoVeiculos(listaVeiculos);
+			    //JOptionPane.showMessageDialog(null, listaVeiculos);
 		    }
 		    br.close();
-		}catch(IOException ioe)
+		}catch(IOException erroAbrir)
 		{
-		     ioe.printStackTrace(); 
+			erroAbrir.printStackTrace(); 
 		}
 		
 		/*
@@ -182,14 +201,14 @@ public class ControleCadastro
 		    	String linha  = new String();
 		    	linha = br.readLine();
 		    	listaEntregas += linha + "\n";
-		    	setListagemArquivoEntregas(listaEntregas+" |\n");
-		        JOptionPane.showMessageDialog(null, listaEntregas);
+		    	setListagemArquivoEntregas(listaEntregas);
+		        //JOptionPane.showMessageDialog(null, listaEntregas);
 		    }
 		    br.close();
-		}catch(IOException ioe)
+		}catch(IOException erroAbrir)
 		{
 			JOptionPane.showMessageDialog(null, "Não foi possível abrir/ gerar o relatório de entregas por placa\n 1) Não há cadastro no arquivo.\n 2) Erro ao gerar o relatório.");
-		    ioe.printStackTrace();
+			erroAbrir.printStackTrace();
 		}
 		
 		/*
@@ -214,48 +233,27 @@ public class ControleCadastro
 		*/
 	}
 	
-	/*
-	public boolean erroCadastroArquivoEntregas() {
-		if (listaEntregas.size() == 0){
-			
-		}
-		return true;
-	}
-	*/
-	
 	public int getSizeListaEntregas() {
 		return listaEntregas.size();
 	}
 
 	public void salvarCadastroEntregas()
 	{
-
-		// Falta implementar um novo relatório de Entregas ordenado por PLACA
-		// Quando na posição do i o número da placa ser igual aos registros anteriores ou posteriores, 
-		
         Entrega cadastroEntrega = new Entrega();
         
     	String relatorioEntregas = "";
     	
-    	/*
-    	if (erroCadastroArquivoEntregas() == true){
-    		JOptionPane.showMessageDialog(null, "Não há entregas cadastradas para salvar em um arquivo!");	
-    	} else {
-    		
-    	}
-    	*/
-    	
     	if(listaEntregas.size() == 0) {
-    		JOptionPane.showMessageDialog(null, "Não há entregas cadastradas para salvar em um arquivo!");		
+    		//JOptionPane.showMessageDialog(null, "Não há entregas cadastradas para salvar em um arquivo!");		
     	} else {
     		for (int i = 0; i < listaEntregas.size(); i++)
     		{
         		cadastroEntrega = listaEntregas.get(i);
-        		relatorioEntregas += "Código da entrega: " + cadastroEntrega.getCodigoEntrega()
-                + ", \n" + "Descrição do produto: " + cadastroEntrega.getDescricaoProduto()
-                + ", \n" + "Descrição do destino: " + cadastroEntrega.getDescricaoDestino() 
+        		relatorioEntregas += "Código entrega: " + cadastroEntrega.getCodigoEntrega()
+                + ", \n" + "Produto: " + cadastroEntrega.getDescricaoProduto()
+                + ", \n" + "Destino: " + cadastroEntrega.getDescricaoDestino() 
                 + ", \n" + "Distância: " + cadastroEntrega.getDistanciaEntrega()
-                + ", \n" + "Placa do veículo: " + cadastroEntrega.getPlacaVeiculo() 
+                + ", \n" + "Placa Veículo: " + cadastroEntrega.getPlacaVeiculo() 
                 + ".";
             }
             try 
@@ -269,9 +267,9 @@ public class ControleCadastro
 
                 JOptionPane.showMessageDialog(null, "Listagem de entregas salvo em arquivo com sucesso!");
 
-            }catch(IOException erro)
+            }catch(IOException erroSalvar)
             {
-            	erro.printStackTrace();
+            	erroSalvar.printStackTrace();
             	JOptionPane.showMessageDialog(null, "Aconteceu um erro ao tentar salvar o cadastro de entregas em arquivo!");
             }
     	}
@@ -288,16 +286,16 @@ public class ControleCadastro
     	String relatorioVeiculos = "";
     	
     	if(listaVeiculos.size() == 0) {
-    		JOptionPane.showMessageDialog(null, "Não há veículos cadastrados para salvar em um arquivo!");
+    		//JOptionPane.showMessageDialog(null, "Não há veículos cadastrados para salvar em um arquivo!");
     	} else {
     		for (int i = 0; i < listaVeiculos.size(); i++)
     		{
         		cadastroVeiculo = listaVeiculos.get(i);
-        		relatorioVeiculos += "Código do veículo: " + cadastroVeiculo.getCodigoVeiculo()
-        		+ ", \n" + "Placa do veículo: " + cadastroVeiculo.getPlacaVeiculo()
-        		+ ", \n" + "Nome do veículo: " + cadastroVeiculo.getNomeVeiculo()
-        		+ ", \n" + "Marca do veículo: " + cadastroVeiculo.getMarcaVeiculo()
-        		+ ", \n" + "Ano do veículo: " + cadastroVeiculo.getAnoVeiculo()
+        		relatorioVeiculos += "Código veículo: " + cadastroVeiculo.getCodigoVeiculo()
+        		+ ", \n" + "Placa Veículo: " + cadastroVeiculo.getPlacaVeiculo()
+        		+ ", \n" + "Nome : " + cadastroVeiculo.getNomeVeiculo()
+        		+ ", \n" + "Marca : " + cadastroVeiculo.getMarcaVeiculo()
+        		+ ", \n" + "Ano : " + cadastroVeiculo.getAnoVeiculo()
                 + ".";
             }
             try 
@@ -311,40 +309,13 @@ public class ControleCadastro
 
                 JOptionPane.showMessageDialog(null, "Listagem de veículos salvo em arquivo com sucesso!");
 
-            }catch(IOException erro)
+            }catch(IOException erroSalvar)
             {
-            	erro.printStackTrace();
+            	erroSalvar.printStackTrace();
             	JOptionPane.showMessageDialog(null, "Aconteceu um erro ao tentar salvar o cadastro de veículos em arquivo!");
             }
     	}
     }
-    
-	/*
-	public void listarCadastrosHoteis() {
-
-        Hotel cadastroHotel = new Hotel();
-        
-    	String relatorioEntregasPlaca = " ";
-
-    	if (listaHoteis.size() == 0) {
-    		JOptionPane.showMessageDialog(null, "Não há hotéis cadastrados para listar!");	
-    	} else 
-    	{
-            for (int i = 0; i < listaEntregasPlaca.size(); i++) 
-            {
-
-                cadastroHotel = listaEntregasPlaca.get(i);
-
-                relatorioEntregasPlaca += "Nome do hotel: " + cadastroHotel.getNome() 
-                + ", Cidade do hotel: " + cadastroHotel.getCidade() 
-                + ", Avaliação do Hotel: " + cadastroHotel.getAvaliacao() 
-                + ".";
-
-            }
-            JOptionPane.showMessageDialog(null, relatorioEntregasPlaca, "Hotéis cadastrados com sucesso!", 1);
-    	}
-	}	
-	*/
 
 	public void apagarListaEntregas() {
 		listaEntregas.clear();
@@ -361,7 +332,7 @@ public class ControleCadastro
 	}
 
 	public void setListagemArquivoVeiculos(String listagemArquivoVeiculos) {
-		this.listagemArquivoVeiculos = listagemArquivoVeiculos;
+		this.listagemArquivoVeiculos = listagemArquivoVeiculos + " |\n";
 	}
 
 	public String getListagemArquivoEntregas() {
@@ -369,6 +340,8 @@ public class ControleCadastro
 	}
 
 	public void setListagemArquivoEntregas(String listagemArquivoEntregas) {
-		this.listagemArquivoEntregas = listagemArquivoEntregas;
+		this.listagemArquivoEntregas = listagemArquivoEntregas + " |\n";
 	}
+	
+	
 }
