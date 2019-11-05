@@ -15,350 +15,269 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 
-import javax.swing.AbstractListModel;
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Scanner;
-
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JList;
-import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 
 public class MenuPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private ControleCadastro controleCadastro;
-	private JTable tableVeiculos;
 	private JTable tableEntregas;
-	private JTable tableArquivoEntregas;
-	private JTable tableArquivoVeiculos;
-	
-	
-	public static void main(String[] args) 
-	{
-		EventQueue.invokeLater(new Runnable() 
-		{
-			public void run() 
-			{
-				try 
-				{
+	private JTable tableVeiculos;
+
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
 					MenuPrincipal frame = new MenuPrincipal();
 					frame.setVisible(true);
-				} catch (Exception e) 
-				{
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
 	}
 
-	public MenuPrincipal() 
-	{
+	public MenuPrincipal() {
 
 		controleCadastro = new ControleCadastro();
-		
+
 		setTitle("Aladim Tapete Mágico - Transportes");
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
-		setBounds(100, 100, 680, 780);
-		
+
+		setBounds(100, 100, 365, 460);
+
 		contentPane = new JPanel();
-		
+
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		
+
 		setContentPane(contentPane);
-		
+
 		contentPane.setLayout(null);
-		
-		JButton botaoCadastroVeiculo = new JButton("Cadastro de Veículo");
-		botaoCadastroVeiculo.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		
-		botaoCadastroVeiculo.addMouseListener(new MouseAdapter() 
-		{
-			public void mouseReleased(MouseEvent e) 
-			{
-				try 
-				{
-					CadastroVeiculo dialog = new CadastroVeiculo();
-					dialog.setControleCadastro(controleCadastro);
 
-					dialog.setModal(true); 
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBounds(0, 0, 339, 420);
+		contentPane.add(tabbedPane);
 
-					dialog.setVisible(true);	
-					
-					tableVeiculos.setModel(new DefaultTableModel (
-					controleCadastro.getListaVeiculos(),
-					new String[] {
-						"Código Veículo" , "Placa Veículo", "Nome Veículo"
-					}));
-	
-				} catch (Exception erroCadastroVeículo) 
-				{
-					erroCadastroVeículo.printStackTrace();
-					JOptionPane.showMessageDialog(null, "Houve um erro ao tentar cadastrar veículo!");
-				}
-			}
-		});
-		botaoCadastroVeiculo.setBounds(10, 11, 306, 20);
-		contentPane.add(botaoCadastroVeiculo);
-		
-		JLabel lblTabelaVeiculos = new JLabel("Tabela de Ve\u00EDculos");
+		JPanel panelCadastroVeiculo = new JPanel();
+		tabbedPane.addTab("Cadastro de Ve\u00EDculo", null, panelCadastroVeiculo, null);
+		panelCadastroVeiculo.setLayout(null);
+
+		DefaultTableModel meuModelTableVeiculos = new DefaultTableModel(
+				new String[][] { { "1", "QHV-6984", "CG Start 160" }, },
+				new String[] { "Código Veículo", "Placa Veículo", "Nome Veículo" });
+
+		DefaultTableModel meuModelTableEntregas = new DefaultTableModel(
+				new String[][] { { "1", "Eletrônico", "QHV-6984" },
+
+				}, new String[] { "Código Entrega", "Produto Entrega", "Placa Entrega" });
+
+
+		JLabel lblTabelaVeiculos = new JLabel("Cadastro atual: Tabela de Ve\u00EDculos");
+		lblTabelaVeiculos.setBounds(10, 11, 314, 23);
+		panelCadastroVeiculo.add(lblTabelaVeiculos);
 		lblTabelaVeiculos.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblTabelaVeiculos.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTabelaVeiculos.setBounds(10, 60, 306, 20);
-		contentPane.add(lblTabelaVeiculos);
 		
-		JButton botaoCadastroEntrega = new JButton("Cadastro de Entrega");
-		botaoCadastroEntrega.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		botaoCadastroEntrega.addMouseListener(new MouseAdapter() 
-		{
-			public void mouseReleased(MouseEvent e) 
-			{
-				try 
-				{
-					CadastroEntrega dialog = new CadastroEntrega();
-					dialog.setControleCadastro(controleCadastro);
-
-					dialog.setModal(true); 
-					
-					dialog.setVisible(true);	
-					
-					tableEntregas.setModel(new DefaultTableModel (
-					controleCadastro.getListaEntregas(),
-					new String[] {
-						"Código Entrega" , "Produto Entrega", "Placa Entrega"
-					}));
-
-				} catch (Exception erroCadastroEntrega) 
-				{
-					erroCadastroEntrega.printStackTrace();
-					JOptionPane.showMessageDialog(null, "Houve um erro ao tentar cadastrar entrega!");
-				}
-			}
-		});
-		botaoCadastroEntrega.setBounds(342, 11, 306, 20);
-		contentPane.add(botaoCadastroEntrega);
-		
-		JLabel lblTabelaEntregas = new JLabel("Tabela de Entregas");
-		lblTabelaEntregas.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTabelaEntregas.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblTabelaEntregas.setBounds(345, 60, 306, 20);
-		contentPane.add(lblTabelaEntregas);
-		
-		JButton botaoRelatorioEntregasPlaca = new JButton("Relatório de entregas por placa");
-		botaoRelatorioEntregasPlaca.addMouseListener(new MouseAdapter() {
-			public void mouseReleased(MouseEvent e) {
-				if (controleCadastro.getSizeListaEntregas() == 0) {
-					JOptionPane.showMessageDialog(null, "Alerta: Você deve cadastrar uma entrega primeiro!\nMotivo: Não há cadastro de entrega salvo em arquivo.");
-				} else {
-					JOptionPane.showMessageDialog(null, controleCadastro.getListaEntregasPlaca());
-					//controleCadastro.abrirArquivoEntrega();	
-				}
-			}
-		});
-		botaoRelatorioEntregasPlaca.setFont(new Font("Tahoma", Font.BOLD, 11));
-		botaoRelatorioEntregasPlaca.setBounds(10, 699, 285, 20);
-		contentPane.add(botaoRelatorioEntregasPlaca);
-		
-		JLabel lblRelatorio = new JLabel("");
-		lblRelatorio.setIcon(new ImageIcon("X:\\Usu\u00E1rios\\Alexandre Casagrande\\Desktop\\Java\\Prova N2 Programa\u00E7\u00E3o 1\\src\\transportadora\\n2\\iconRelatorioEntregasPlaca16px.png"));
-		lblRelatorio.setHorizontalAlignment(SwingConstants.CENTER);
-		lblRelatorio.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblRelatorio.setBounds(296, 699, 20, 20);
-		contentPane.add(lblRelatorio);
-		
-		JButton botaoFechar = new JButton("Sair");
-		botaoFechar.setFont(new Font("Tahoma", Font.BOLD, 11));
-		botaoFechar.addMouseListener(new MouseAdapter() {
-			public void mouseReleased(MouseEvent e) {
-				setVisible(false);
-			}
-		});
-		botaoFechar.setBounds(345, 699, 285, 20);
-		contentPane.add(botaoFechar);
-
 		tableVeiculos = new JTable();
 		JScrollPane scrollPaneVeiculos = new JScrollPane();
-		scrollPaneVeiculos.setBounds(10, 91, 306, 130);
-		contentPane.add(scrollPaneVeiculos);
+		scrollPaneVeiculos.setBounds(10, 39, 314, 80);
+		panelCadastroVeiculo.add(scrollPaneVeiculos);
 		
-		DefaultTableModel meuModelTableVeiculos = new DefaultTableModel(
-				new String[][] {
-					{"1", "QHV-6984", "CG Start 160"},
-					},
-				new String[] {
-					"Código Veículo", "Placa Veículo", "Nome Veículo"
-				}); 
-				
 		tableVeiculos.setModel(meuModelTableVeiculos);		
 		scrollPaneVeiculos.setViewportView(tableVeiculos);
+		
+				JLabel lblArquivoVeiculos = new JLabel("Cadastro salvo: Arquivo de Ve\u00EDculos");
+				lblArquivoVeiculos.setBounds(10, 130, 314, 23);
+				panelCadastroVeiculo.add(lblArquivoVeiculos);
+				lblArquivoVeiculos.setHorizontalAlignment(SwingConstants.CENTER);
+				lblArquivoVeiculos.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		
+				JScrollPane scrollPaneArquivoDeVeiculos = new JScrollPane();
+				scrollPaneArquivoDeVeiculos.setBounds(10, 164, 314, 80);
+				panelCadastroVeiculo.add(scrollPaneArquivoDeVeiculos);
+				
+						JTextArea textAreaArquivoDeVeiculos = new JTextArea();
+						scrollPaneArquivoDeVeiculos.setViewportView(textAreaArquivoDeVeiculos);
+		
+		
+				JButton botaoCadastroVeiculo = new JButton("Cadastro de Veículo");
+				botaoCadastroVeiculo.setBounds(10, 255, 314, 20);
+				panelCadastroVeiculo.add(botaoCadastroVeiculo);
+				botaoCadastroVeiculo.setFont(new Font("Tahoma", Font.BOLD, 11));
+				
+						botaoCadastroVeiculo.addMouseListener(new MouseAdapter() {
+							public void mouseReleased(MouseEvent e) {
+								try {
+									CadastroVeiculo dialog = new CadastroVeiculo();
+									dialog.setControleCadastro(controleCadastro);
+				
+									dialog.setModal(true);
+				
+									dialog.setVisible(true);
+				
+								} catch (Exception erroCadastroVeículo) {
+									erroCadastroVeículo.printStackTrace();
+									JOptionPane.showMessageDialog(null, "Houve um erro ao tentar cadastrar veículo!");
+								}
+							}
+						});
+				
+						JLabel lblSQL = new JLabel("");
+						lblSQL.setBounds(304, 298, 20, 20);
+						panelCadastroVeiculo.add(lblSQL);
+						lblSQL.setIcon(new ImageIcon("X:\\Usu\u00E1rios\\Alexandre Casagrande\\Desktop\\Java\\Prova N2 Programa\u00E7\u00E3o 1\\src\\transportadora\\n2\\iconSQL.png"));
+						lblSQL.setHorizontalAlignment(SwingConstants.CENTER);
+						lblSQL.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		
+				JButton botaoCRUDSQL = new JButton("CRUD (Banco de Dados PostgreSQL)");
+				botaoCRUDSQL.setBounds(10, 298, 285, 20);
+				panelCadastroVeiculo.add(botaoCRUDSQL);
+				botaoCRUDSQL.setFont(new Font("Tahoma", Font.BOLD, 11));
 
-		tableEntregas = new JTable();
-		JScrollPane scrollPaneEntregas = new JScrollPane();
-		scrollPaneEntregas.setBounds(345, 91, 306, 130);
-		contentPane.add(scrollPaneEntregas);
-		
-		DefaultTableModel meuModelTableEntregas = new DefaultTableModel(
-				new String[][] {
-					{"1", "Eletrônico", "QHV-6984"},
-					
-					},
-				new String[] {
-					"Código Entrega", "Produto Entrega", "Placa Entrega"
-				}); 
-			
-		tableEntregas.setModel(meuModelTableEntregas);
-		scrollPaneEntregas.setViewportView(tableEntregas);
-
-		tableArquivoEntregas = new JTable();
-		JScrollPane scrollPaneArquivoEntregas = new JScrollPane();
-		scrollPaneArquivoEntregas.setBounds(346, 507, 306, 150);
-		contentPane.add(scrollPaneArquivoEntregas);
-		
-		DefaultTableModel meuModelArquivoEntregas = new DefaultTableModel(
-				new String[][] {
-					{"1", "Eletrônico", "QHV-6984"},
-					},
-				new String[] {
-					"Código Entrega", "Produto Entrega", "Placa Entrega"
-				}); 
-		
-		tableArquivoEntregas.setModel(meuModelArquivoEntregas);		
-		scrollPaneArquivoEntregas.setViewportView(tableArquivoEntregas);
-
-		tableArquivoVeiculos = new JTable();
-		JScrollPane scrollPaneArquivoVeiculos = new JScrollPane();
-		scrollPaneArquivoVeiculos.setBounds(10, 507, 306, 150);
-		contentPane.add(scrollPaneArquivoVeiculos);
-		
-		DefaultTableModel meuModelArquivoVeiculos = new DefaultTableModel(
-				new String[][] {
-					{"1", "QHV-6984", "CG Start 160"},
-					},
-				new String[] {
-					
-					"Código Veículo", "Placa Veículo", "Nome Veículo"
-				}); 
-		
-		tableArquivoVeiculos.setModel(meuModelArquivoVeiculos);		
-		scrollPaneArquivoVeiculos.setViewportView(tableArquivoVeiculos);
-		
+		JLabel lblGitHub = new JLabel("");
+		lblGitHub.setBounds(304, 329, 20, 20);
+		panelCadastroVeiculo.add(lblGitHub);
+		lblGitHub.setIcon(new ImageIcon("X:\\Usu\u00E1rios\\Alexandre Casagrande\\Desktop\\Java\\Prova N2 Programa\u00E7\u00E3o 1\\src\\transportadora\\n2\\iconGitHub16px.png"));
+		lblGitHub.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGitHub.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 		JButton botaoGitHub = new JButton("GitHub @Dex4n Avalia\u00E7\u00E3o N2");
+		botaoGitHub.setBounds(10, 329, 285, 20);
+		panelCadastroVeiculo.add(botaoGitHub);
 		botaoGitHub.setFont(new Font("Tahoma", Font.BOLD, 11));
-		botaoGitHub.addMouseListener(new MouseAdapter() 
-		{
-			public void mouseReleased(MouseEvent e) 
-			{
-				try 
-				{
-					java.awt.Desktop.getDesktop().browse(new java.net.URI("https://github.com/Dex4n/Avaliacao-CESUSC-N2"));
-				} catch (IOException | URISyntaxException e1) 
-				{
+
+		JLabel lblSair = new JLabel("");
+		lblSair.setBounds(304, 360, 20, 20);
+		panelCadastroVeiculo.add(lblSair);
+		lblSair.setIcon(new ImageIcon("X:\\Usu\u00E1rios\\Alexandre Casagrande\\Desktop\\Java\\Prova N2 Programa\u00E7\u00E3o 1\\src\\transportadora\\n2\\iconExitMenuPrincipal16px.png"));
+		lblSair.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSair.setFont(new Font("Tahoma", Font.PLAIN, 12));
+
+		JButton botaoSair = new JButton("Sair");
+		botaoSair.setBounds(10, 360, 285, 20);
+		panelCadastroVeiculo.add(botaoSair);
+		botaoSair.setFont(new Font("Tahoma", Font.BOLD, 11));
+		botaoSair.addMouseListener(new MouseAdapter() {
+			public void mouseReleased(MouseEvent e) {
+				setVisible(false);
+				controleCadastro.closeFileVeiculos();
+				controleCadastro.closeFileEntregas();	
+			}
+		});
+
+		botaoGitHub.addMouseListener(new MouseAdapter() {
+			public void mouseReleased(MouseEvent e) {
+				try {
+					java.awt.Desktop.getDesktop()
+							.browse(new java.net.URI("https://github.com/Dex4n/Avaliacao-CESUSC-N2"));
+				} catch (IOException | URISyntaxException e1) {
 					e1.printStackTrace();
 				}
 			}
 		});
 
+		JPanel panelCadastroEntrega = new JPanel();
+		tabbedPane.addTab("Cadastro de Entrega", null, panelCadastroEntrega, null);
+		panelCadastroEntrega.setLayout(null);
 
-		botaoGitHub.setBounds(10, 668, 285, 20);
-		getContentPane().add(botaoGitHub);
-		
-		JLabel lblSair = new JLabel("");
-		lblSair.setIcon(new ImageIcon("X:\\Usu\u00E1rios\\Alexandre Casagrande\\Desktop\\Java\\Prova N2 Programa\u00E7\u00E3o 1\\src\\transportadora\\n2\\iconExitMenuPrincipal16px.png"));
-		lblSair.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSair.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblSair.setBounds(631, 699, 20, 20);
-		contentPane.add(lblSair);
-		
-		JLabel lblGitHub = new JLabel("");
-		lblGitHub.setIcon(new ImageIcon("X:\\Usu\u00E1rios\\Alexandre Casagrande\\Desktop\\Java\\Prova N2 Programa\u00E7\u00E3o 1\\src\\transportadora\\n2\\iconGitHub16px.png"));
-		lblGitHub.setHorizontalAlignment(SwingConstants.CENTER);
-		lblGitHub.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblGitHub.setBounds(295, 668, 20, 20);
-		contentPane.add(lblGitHub);
-		
-		JLabel lblArquivoVeiculos = new JLabel("Arquivo de Ve\u00EDculos");
-		lblArquivoVeiculos.setHorizontalAlignment(SwingConstants.CENTER);
-		lblArquivoVeiculos.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblArquivoVeiculos.setBounds(10, 476, 306, 20);
-		contentPane.add(lblArquivoVeiculos);
-		
-		JLabel lblArquivoEntregas = new JLabel("Arquivo de Entregas");
+		JLabel lblTabelaEntregas = new JLabel("Cadastro atual: Tabela de Entregas");
+		lblTabelaEntregas.setBounds(10, 11, 314, 23);
+		panelCadastroEntrega.add(lblTabelaEntregas);
+		lblTabelaEntregas.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTabelaEntregas.setFont(new Font("Tahoma", Font.PLAIN, 12));
+
+		tableEntregas = new JTable();
+		JScrollPane scrollPaneEntregas = new JScrollPane();
+		scrollPaneEntregas.setBounds(10, 39, 314, 80);
+		panelCadastroEntrega.add(scrollPaneEntregas);
+
+		tableEntregas.setModel(meuModelTableEntregas);
+		scrollPaneEntregas.setViewportView(tableEntregas);
+
+		JLabel lblArquivoEntregas = new JLabel("Cadastro salvo: Arquivo de Entregas");
+		lblArquivoEntregas.setBounds(10, 130, 314, 23);
+		panelCadastroEntrega.add(lblArquivoEntregas);
 		lblArquivoEntregas.setHorizontalAlignment(SwingConstants.CENTER);
 		lblArquivoEntregas.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblArquivoEntregas.setBounds(345, 476, 306, 20);
-		contentPane.add(lblArquivoEntregas);
+
+		JScrollPane scrollPaneArquivoDeEntregas = new JScrollPane();
+		scrollPaneArquivoDeEntregas.setBounds(10, 164, 314, 80);
+		panelCadastroEntrega.add(scrollPaneArquivoDeEntregas);
 		
-		JButton botaoSQL = new JButton("Abrir op\u00E7\u00F5es de CRUD (Banco de Dados PostgreSQL)");
-		botaoSQL.setFont(new Font("Tahoma", Font.BOLD, 11));
-		botaoSQL.setBounds(345, 668, 285, 20);
-		contentPane.add(botaoSQL);
+		JTextArea textAreaArquivoDeEntregas = new JTextArea();
+		scrollPaneArquivoDeEntregas.setViewportView(textAreaArquivoDeEntregas);
 		
-		JLabel lblSQL = new JLabel("");
-		lblSQL.setIcon(new ImageIcon("X:\\Usu\u00E1rios\\Alexandre Casagrande\\Desktop\\Java\\Prova N2 Programa\u00E7\u00E3o 1\\src\\transportadora\\n2\\iconSQL.png"));
-		lblSQL.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSQL.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblSQL.setBounds(631, 668, 20, 20);
-		
-		contentPane.add(lblSQL);
-		
-		DefaultListModel defaultListModelArquivoVeiculos = new DefaultListModel();
-		
-		JList listaArquivoVeiculos = new JList();
-		listaArquivoVeiculos.setBackground(Color.GRAY);
-		listaArquivoVeiculos.setBounds(10, 263, 641, 80);
-		listaArquivoVeiculos.setModel(defaultListModelArquivoVeiculos);
-		contentPane.add(listaArquivoVeiculos);
-		
-		DefaultListModel defaultListModelArquivoEntregas = new DefaultListModel();
-		
-		JList listaArquivoEntregas = new JList();
-		listaArquivoEntregas.setBackground(Color.GRAY);
-		listaArquivoEntregas.setBounds(10, 385, 641, 80);
-		listaArquivoEntregas.setModel(defaultListModelArquivoEntregas);
-		contentPane.add(listaArquivoEntregas);
-		
-		JLabel lblListArquivoVeiculos = new JLabel("Arquivo de Ve\u00EDculos");
-		lblListArquivoVeiculos.setHorizontalAlignment(SwingConstants.CENTER);
-		lblListArquivoVeiculos.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblListArquivoVeiculos.setBounds(10, 232, 641, 20);
-		contentPane.add(lblListArquivoVeiculos);
-		
-		JLabel lblListArquivoEntregas = new JLabel("Arquivo de Entregas");
-		lblListArquivoEntregas.setHorizontalAlignment(SwingConstants.CENTER);
-		lblListArquivoEntregas.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblListArquivoEntregas.setBounds(10, 354, 641, 20);
-		contentPane.add(lblListArquivoEntregas);
-		
-		addWindowListener(new WindowAdapter() {
-			public void windowOpened(WindowEvent e) {
-				
-				controleCadastro.salvarCadastroEntregas();
-				controleCadastro.abrirArquivoEntrega();
-				controleCadastro.salvarCadastroVeiculos();
-				controleCadastro.abrirArquivoVeiculo();
-				
-				//https://www.guj.com.br/t/chamar-metodo-get-de-acordo-com-arquivo-txt/83038/7
-				//https://pt.stackoverflow.com/questions/3905/como-comparar-strings-em-java
-				
-				listaArquivoVeiculos.setModel(defaultListModelArquivoVeiculos);
-				defaultListModelArquivoVeiculos.addElement(controleCadastro.getListagemArquivoVeiculos());
-				
-				
-				listaArquivoEntregas.setModel(defaultListModelArquivoEntregas);
-				defaultListModelArquivoEntregas.addElement(controleCadastro.getListagemArquivoEntregas());
+				JButton botaoCadastroEntrega = new JButton("Cadastro de Entrega");
+				botaoCadastroEntrega.setBounds(10, 255, 314, 20);
+				panelCadastroEntrega.add(botaoCadastroEntrega);
+				botaoCadastroEntrega.setFont(new Font("Tahoma", Font.BOLD, 11));
+				botaoCadastroEntrega.addMouseListener(new MouseAdapter() {
+					public void mouseReleased(MouseEvent e) {
+						try {
+							CadastroEntrega dialog = new CadastroEntrega();
+							dialog.setControleCadastro(controleCadastro);
+
+							dialog.setModal(true);
+
+							dialog.setVisible(true);
+
+							tableEntregas.setModel(new DefaultTableModel(controleCadastro.getListaEntregas(),
+									new String[] { "Código Entrega", "Produto Entrega", "Placa Entrega" }));
+
+						} catch (Exception erroCadastroEntrega) {
+							erroCadastroEntrega.printStackTrace();
+							JOptionPane.showMessageDialog(null, "Houve um erro ao tentar cadastrar entrega!");
+						}
+					}
+				});
+
+		JLabel lblRelatorio = new JLabel("Relat\u00F3rio");
+		lblRelatorio.setBounds(304, 365, 20, 16);
+		panelCadastroEntrega.add(lblRelatorio);
+		lblRelatorio.setIcon(new ImageIcon("X:\\Usu\u00E1rios\\Alexandre Casagrande\\Desktop\\Java\\Prova N2 Programa\u00E7\u00E3o 1\\src\\transportadora\\n2\\iconRelatorioEntregasPlaca16px.png"));
+		lblRelatorio.setFont(new Font("Tahoma", Font.PLAIN, 12));
+
+		JButton botaoRelatorioEntregasPlaca = new JButton("Relatório de entregas por placa");
+		botaoRelatorioEntregasPlaca.setBounds(10, 361, 285, 20);
+		panelCadastroEntrega.add(botaoRelatorioEntregasPlaca);
+		botaoRelatorioEntregasPlaca.addMouseListener(new MouseAdapter() {
+			public void mouseReleased(MouseEvent e) {
+				if (controleCadastro.getSizeListaEntregas() == 0) {
+					JOptionPane.showMessageDialog(null,
+							"Alerta: Você deve cadastrar uma entrega primeiro!\nMotivo: Não há cadastro de entrega salvo em arquivo.");
+				} else {
+					JOptionPane.showMessageDialog(null, controleCadastro.getListaEntregasPlaca());
+
+				}
 			}
 		});
-		
+		botaoRelatorioEntregasPlaca.setFont(new Font("Tahoma", Font.BOLD, 11));
+
+		addWindowListener(new WindowAdapter() {
+			public void windowOpened(WindowEvent e) {
+				controleCadastro.openFileVeiculos(1);
+				controleCadastro.openFileEntregas(1);
+				controleCadastro.readRecordsVeiculos();
+				controleCadastro.readRecordsEntregas();
+
+				textAreaArquivoDeVeiculos.setText(controleCadastro.getListagemArquivoVeiculos());
+				textAreaArquivoDeEntregas.setText(controleCadastro.getListagemArquivoEntregas());
+			}
+			public void windowClosed(WindowEvent e) {
+				controleCadastro.closeFileVeiculos();
+				controleCadastro.closeFileEntregas();	
+			}
+		});
 	}
 }

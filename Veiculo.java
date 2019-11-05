@@ -43,7 +43,10 @@ public class Veiculo {
 		this.anoVeiculo = anoVeiculo;
 	}
 	public String toString() {
-		return "CadastroVeiculo [codigoVeiculo=" + codigoVeiculo + ", placaVeiculo=" + placaVeiculo + ", nomeVeiculo="
-				+ nomeVeiculo + ", marcaVeiculo=" + marcaVeiculo + ", anoVeiculo=" + anoVeiculo + "]";
+		return "Veículo:\nCódigo do Veiculo = " + codigoVeiculo 
+				+ ",\nPlaca do Veículo = " + placaVeiculo 
+				+ ",\nNome do Veículo = " + nomeVeiculo
+				+ ",\nMarca do Veículo = " + marcaVeiculo
+				+ ",\nAno do Veículo = " + anoVeiculo + "";
 	}
 }

@@ -9,7 +9,6 @@ public class Entrega {
 	private String placaVeiculo;
 	
 	public Entrega() {
-		super();
 	}
 
 	public int getCodigoEntrega() {
@@ -43,8 +42,10 @@ public class Entrega {
 		this.placaVeiculo = placaVeiculo;
 	}
 	public String toString() {
-		return "CadastroEntrega [codigoEntrega=" + codigoEntrega + ", descricaoProduto=" + descricaoProduto
-				+ ", descricaoDestino=" + descricaoDestino + ", distanciaEntrega=" + distanciaEntrega
-				+ ", placaVeiculo=" + placaVeiculo + "]";
+		return "Entrega:\nCódigo da Entrega = " + codigoEntrega 
+				+ ",\nDescrição do Produto = " + descricaoProduto
+				+ ",\nDescrição do Destino = " + descricaoDestino
+				+ ",\nDistância da Entrega = " + distanciaEntrega
+				+ ",\nPlaca do Veículo = " + placaVeiculo + "";
 	}
 }
