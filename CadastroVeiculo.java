@@ -104,8 +104,7 @@ public class CadastroVeiculo extends JDialog {
 							JOptionPane.showMessageDialog(null, "Os campos de <Código, Produto, Destino, Distância e Placa> obrigatoriamente devem estar preenchidos!");
 						} else {
 							cadastroVeiculo();
-							//controleCadastro.salvarCadastroVeiculos();
-
+							controleCadastro.closeFileVeiculos();
 							setVisible(false);
 						}	
 					}
@@ -118,6 +117,7 @@ public class CadastroVeiculo extends JDialog {
 				JButton cancelButton = new JButton("Sair");
 				cancelButton.addMouseListener(new MouseAdapter() {
 					public void mouseReleased(MouseEvent e) {
+						controleCadastro.closeFileVeiculos();
 						setVisible(false);
 					}
 				});
@@ -156,7 +156,6 @@ public class CadastroVeiculo extends JDialog {
 			controleCadastro.adicionaVeiculo(meuVeiculo);
 			controleCadastro.openFileVeiculos(0);
 			controleCadastro.addRecordsVeiculos(meuVeiculo);
-			//controleCadastro.closeFileVeiculos();
 
 			JOptionPane.showMessageDialog(null, "Sucesso ao cadastrar um veículo!");
 		} catch (Exception e) 

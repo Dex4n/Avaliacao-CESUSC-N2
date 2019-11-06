@@ -29,6 +29,7 @@ public class CadastroEntrega extends JDialog {
 	public static void main(String[] args) {
 		try {
 			CadastroEntrega dialog = new CadastroEntrega();
+			
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -107,8 +108,7 @@ public class CadastroEntrega extends JDialog {
 							JOptionPane.showMessageDialog(null, "Os campos de <Código, Produto, Destino, Distância e Placa> obrigatoriamente devem estar preenchidos!");
 						} else {
 							cadastroEntrega();		
-							//controleCadastro.salvarCadastroEntregas();
-							
+							controleCadastro.closeFileEntregas();	
 							setVisible(false);
 						}		
 					}
@@ -121,6 +121,7 @@ public class CadastroEntrega extends JDialog {
 				JButton cancelButton = new JButton("Sair");
 				cancelButton.addMouseListener(new MouseAdapter() {
 					public void mouseReleased(MouseEvent e) {
+						controleCadastro.closeFileEntregas();
 						setVisible(false);
 					}
 				});
@@ -159,7 +160,6 @@ public class CadastroEntrega extends JDialog {
 			controleCadastro.adicionaEntrega(minhaEntrega);
 			controleCadastro.openFileEntregas(0);
 			controleCadastro.addRecordsEntregas(minhaEntrega);
-			//controleCadastro.closeFileEntregas();	
 			
 			JOptionPane.showMessageDialog(null, "Sucesso ao cadastrar uma entrega!");
 		} catch (Exception e) 

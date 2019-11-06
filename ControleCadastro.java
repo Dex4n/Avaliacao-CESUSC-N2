@@ -16,7 +16,7 @@ public class ControleCadastro {
 
 	private ArrayList<Veiculo> listaVeiculos;
 	private ArrayList<Entrega> listaEntregas;
-	private ArrayList<Entrega> listaEntregasPlaca;
+	private String listaEntregasPlaca;
 	private String listagemArquivoVeiculos;
 	private String listagemArquivoEntregas;
 	private Formatter outputVeiculos;
@@ -27,7 +27,6 @@ public class ControleCadastro {
 	public ControleCadastro() {
 		super();
 		listaEntregas = new ArrayList<Entrega>();
-		listaEntregasPlaca = new ArrayList<Entrega>();
 		listaVeiculos = new ArrayList<Veiculo>();
 	}
 
@@ -38,19 +37,42 @@ public class ControleCadastro {
 	public void adicionaVeiculo(Veiculo newVeiculo) {
 		listaVeiculos.add(newVeiculo);
 	}
+	
+	// Gera o relatório de entregas (por placa), junto com a média de distância das entregas (por placa) e quantidade de entregas (por placa)
+	public String getListaEntregasPlaca() {
+		
+		String placaSolicitada = "";
+		Double mediaDistancia = 0.0;
+		Double totalDistancia = 0.0;
+		Integer quantidadeEntregas = 0;
+		boolean elIguais = false; 
 
-	public ArrayList<Entrega> getListaEntregasPlaca() {
-		Entrega auxEntrega[] = {};
+		placaSolicitada = JOptionPane.showInputDialog("Digite a placa que você deseja extrair um relatório: ");
 
-		for (int i = 0; i < listaEntregas.size(); i++) {
-			auxEntrega[i] = listaEntregas.get(i);
-			// auxEntrega = listaEntregas.get(i).getPlacaVeiculo() +
-			// listaEntregas.get(i).getDistanciaEntrega();
-			// listaEntregasPlaca.add(aux);
+		for (int i = 0; i < listaEntregas.size(); i++) 
+		{ 
+			if (listaEntregas.get(i).getPlacaVeiculo().equals(placaSolicitada)) {
+				totalDistancia += listaEntregas.get(i).getDistanciaEntrega();
+				quantidadeEntregas += 1;
+				elIguais = true;
+			} else elIguais = false;	
 		}
+		
+		// Procedimento para cálculo da média de distância por placa, tendo como base a soma total de distância das entregas dividido pela quantidade de entregas
+		mediaDistancia = totalDistancia / quantidadeEntregas;
+		
+		if (elIguais == false) {
+			listaEntregasPlaca = "Aviso: Não há nenhuma entrega cadastrada com esse número de placa: " + placaSolicitada + ".";
+		} else {
+			listaEntregasPlaca = "Placa " + placaSolicitada + ",\n"
+					+ "Média: " + mediaDistancia + " KM de distância,\n"
+					+ "Total de " + quantidadeEntregas + " entregas.";
+		}
+
 		return listaEntregasPlaca;
 	}
-
+	
+	// Mostra as informações da lista de veículos (conforme instanciado) no componente de JTABLE da aba de Cadastro de Veículos
 	public String[][] getListaVeiculos() {
 		String[][] matAux = new String[listaVeiculos.size()][3];
 		for (int j = 0; j < listaVeiculos.size(); j++) {
@@ -62,7 +84,8 @@ public class ControleCadastro {
 		}
 		return matAux;
 	}
-
+	
+	// Mostra as informações da lista de entregas (conforme instanciado) no componente de JTABLE da aba de Cadastro de Entregas
 	public String[][] getListaEntregas() {
 		String[][] matAux = new String[listaEntregas.size()][3];
 		for (int j = 0; j < listaEntregas.size(); j++) {
@@ -81,7 +104,7 @@ public class ControleCadastro {
 			switch (modo) {
 			case 0: {
 				FileWriter f;
-				f = new FileWriter("ListaDeVeículos.txt", false);
+				f = new FileWriter("ListaDeVeículos.txt", true);
 				outputVeiculos = new Formatter(f);
 			}
 			case 1:
@@ -103,7 +126,7 @@ public class ControleCadastro {
 			switch (modo) {
 			case 0: {
 				FileWriter f;
-				f = new FileWriter("ListaDeEntregas.txt", false);
+				f = new FileWriter("ListaDeEntregas.txt", true);
 				outputEntregas = new Formatter(f);
 			}
 			case 1:
@@ -218,7 +241,6 @@ public class ControleCadastro {
 	} // Final do método readRecordsEntregas
 
 	// Método closeFile é responsável por fechar os arquivos tanto para escrita quanto para leitura.
-	
 	public void closeFileVeiculos() {
 		if (outputVeiculos != null)
 			outputVeiculos.close();
@@ -233,7 +255,7 @@ public class ControleCadastro {
 			inputEntregas.close();
 	} // Final do método closeFileEntregas
 
-
+	// Método para obter o tamanho da lista de entregas
 	public int getSizeListaEntregas() {
 		return listaEntregas.size();
 	}
