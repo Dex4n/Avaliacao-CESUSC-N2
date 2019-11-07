@@ -58,7 +58,7 @@ public class MenuPrincipal extends JFrame {
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-		setBounds(100, 100, 365, 460);
+		setBounds(100, 100, 365, 550);
 
 		contentPane = new JPanel();
 
@@ -69,7 +69,7 @@ public class MenuPrincipal extends JFrame {
 		contentPane.setLayout(null);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 339, 420);
+		tabbedPane.setBounds(0, 0, 339, 511);
 		contentPane.add(tabbedPane);
 
 		JPanel panelCadastroVeiculo = new JPanel();
@@ -251,14 +251,14 @@ public class MenuPrincipal extends JFrame {
 		});
 
 		JLabel lblRelatorio = new JLabel("Relat\u00F3rio");
-		lblRelatorio.setBounds(304, 361, 20, 16);
+		lblRelatorio.setBounds(305, 285, 20, 16);
 		panelCadastroEntrega.add(lblRelatorio);
 		lblRelatorio.setIcon(new ImageIcon(
 				"X:\\Usu\u00E1rios\\Alexandre Casagrande\\Desktop\\Java\\Prova N2 Programa\u00E7\u00E3o 1\\src\\transportadora\\n2\\iconRelatorioEntregasPorPlaca16px.png"));
 		lblRelatorio.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 		JButton botaoRelatorioEntregasPlaca = new JButton("Relatório de entregas por placa");
-		botaoRelatorioEntregasPlaca.setBounds(10, 361, 285, 20);
+		botaoRelatorioEntregasPlaca.setBounds(10, 286, 285, 20);
 		panelCadastroEntrega.add(botaoRelatorioEntregasPlaca);
 		botaoRelatorioEntregasPlaca.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
@@ -268,6 +268,14 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		botaoRelatorioEntregasPlaca.setFont(new Font("Tahoma", Font.BOLD, 11));
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 312, 314, 160);
+		panelCadastroEntrega.add(scrollPane);
+		
+		JTextArea txtrNovaAtualizao = new JTextArea();
+		scrollPane.setViewportView(txtrNovaAtualizao);
+		txtrNovaAtualizao.setText("Nova atualiza\u00E7\u00E3o: \u00C9 necess\u00E1rio adicionar uma nova view, que vai ter os componentes de: \r\n* JTable, com os atributos c\u00F3digo entrega, placa e dist\u00E2ncia cadastrados de entrega que ser\u00E3o necess\u00E1rios para gerar o relat\u00F3rio caso o usu\u00E1rio solicite que o sistema gere um relat\u00F3r\u00EDo e o mesmo especifique qual placa ele quer que seja elaborado um relat\u00F3rio de entregas por placa.\r\n* JList ou JText, com os dados conforme o usu\u00E1rio solicitar o relat\u00F3rio de entregas por placa, que s\u00E3o a m\u00E9dia de dist\u00E2ncia, quantidade de entregas, o n\u00FAmero da placa e o c\u00F3digo da entrega.\r\nConforme gerar um relat\u00F3rio, o sistema deve atualizar o componente JList ou JText com o resultado da opera\u00E7\u00E3o de elabora\u00E7\u00E3o do relat\u00F3rio.\r\nConforme adicionar uma nova entrega, o componente de JTable deve ser atualizado com os atributos de entrega conforme mencionado no primeiro par\u00E1grafo.");
 
 		addWindowListener(new WindowAdapter() {
 			public void windowOpened(WindowEvent e) {
