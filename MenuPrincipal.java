@@ -263,8 +263,15 @@ public class MenuPrincipal extends JFrame {
 		botaoRelatorioEntregasPlaca.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
 				
-				JOptionPane.showMessageDialog(null, controleCadastro.getListaEntregasPlaca());
+				RelatorioEntregaPlaca dialog = new RelatorioEntregaPlaca();
 				
+				dialog.setControleCadastro(controleCadastro);
+
+				dialog.setModal(true);
+
+				dialog.setVisible(true);
+				
+				//JOptionPane.showMessageDialog(null, controleCadastro.getListaEntregasPlaca());
 			}
 		});
 		botaoRelatorioEntregasPlaca.setFont(new Font("Tahoma", Font.BOLD, 11));
