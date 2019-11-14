@@ -58,7 +58,7 @@ public class MenuPrincipal extends JFrame {
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-		setBounds(100, 100, 365, 550);
+		setBounds(100, 100, 365, 450);
 
 		contentPane = new JPanel();
 
@@ -69,7 +69,7 @@ public class MenuPrincipal extends JFrame {
 		contentPane.setLayout(null);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 339, 511);
+		tabbedPane.setBounds(0, 0, 339, 411);
 		contentPane.add(tabbedPane);
 
 		JPanel panelCadastroVeiculo = new JPanel();
@@ -80,10 +80,9 @@ public class MenuPrincipal extends JFrame {
 				new String[][] { { "5", "QHV-0000", "Celta 1.0 2012" }, },
 				new String[] { "Código Veículo", "Placa Veículo", "Nome Veículo" });
 
-		DefaultTableModel meuModelTableEntregas = new DefaultTableModel(
-				new String[][] { { "5", "Móveis", "QHV-0000" },
+		DefaultTableModel meuModelTableEntregas = new DefaultTableModel(new String[][] { { "5", "Móveis", "QHV-0000" },
 
-				}, new String[] { "Código Entrega", "Produto Entrega", "Placa Entrega" });
+		}, new String[] { "Código Entrega", "Produto Entrega", "Placa Entrega" });
 
 		JLabel lblTabelaVeiculos = new JLabel("Cadastro atual: Tabela de Ve\u00EDculos");
 		lblTabelaVeiculos.setBounds(10, 11, 314, 23);
@@ -126,7 +125,7 @@ public class MenuPrincipal extends JFrame {
 					dialog.setModal(true);
 
 					dialog.setVisible(true);
-					
+
 					tableVeiculos.setModel(new DefaultTableModel(controleCadastro.getListaVeiculos(),
 							new String[] { "Código Veículo", "Placa Veículo", "Nome Veículo" }));
 
@@ -138,7 +137,7 @@ public class MenuPrincipal extends JFrame {
 		});
 
 		JLabel lblSQL = new JLabel("");
-		lblSQL.setBounds(304, 298, 20, 20);
+		lblSQL.setBounds(304, 290, 20, 20);
 		panelCadastroVeiculo.add(lblSQL);
 		lblSQL.setIcon(new ImageIcon(
 				"X:\\Usu\u00E1rios\\Alexandre Casagrande\\Desktop\\Java\\Prova N2 Programa\u00E7\u00E3o 1\\src\\transportadora\\n2\\iconSQL16px.png"));
@@ -146,12 +145,12 @@ public class MenuPrincipal extends JFrame {
 		lblSQL.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 		JButton botaoCRUDSQL = new JButton("CRUD (Banco de Dados PostgreSQL)");
-		botaoCRUDSQL.setBounds(10, 298, 285, 20);
+		botaoCRUDSQL.setBounds(10, 290, 285, 20);
 		panelCadastroVeiculo.add(botaoCRUDSQL);
 		botaoCRUDSQL.setFont(new Font("Tahoma", Font.BOLD, 11));
 
 		JLabel lblGitHub = new JLabel("");
-		lblGitHub.setBounds(304, 329, 20, 20);
+		lblGitHub.setBounds(304, 321, 20, 20);
 		panelCadastroVeiculo.add(lblGitHub);
 		lblGitHub.setIcon(new ImageIcon(
 				"X:\\Usu\u00E1rios\\Alexandre Casagrande\\Desktop\\Java\\Prova N2 Programa\u00E7\u00E3o 1\\src\\transportadora\\n2\\iconGitHubDex4n16px.png"));
@@ -159,12 +158,12 @@ public class MenuPrincipal extends JFrame {
 		lblGitHub.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 		JButton botaoGitHub = new JButton("GitHub @Dex4n Avalia\u00E7\u00E3o N2");
-		botaoGitHub.setBounds(10, 329, 285, 20);
+		botaoGitHub.setBounds(10, 321, 285, 20);
 		panelCadastroVeiculo.add(botaoGitHub);
 		botaoGitHub.setFont(new Font("Tahoma", Font.BOLD, 11));
 
 		JLabel lblSair = new JLabel("");
-		lblSair.setBounds(304, 361, 20, 20);
+		lblSair.setBounds(304, 352, 20, 20);
 		panelCadastroVeiculo.add(lblSair);
 		lblSair.setIcon(new ImageIcon(
 				"X:\\Usu\u00E1rios\\Alexandre Casagrande\\Desktop\\Java\\Prova N2 Programa\u00E7\u00E3o 1\\src\\transportadora\\n2\\iconSairMenuPrincipal16px.png"));
@@ -172,7 +171,7 @@ public class MenuPrincipal extends JFrame {
 		lblSair.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 		JButton botaoSair = new JButton("Sair");
-		botaoSair.setBounds(10, 361, 285, 20);
+		botaoSair.setBounds(10, 352, 285, 20);
 		panelCadastroVeiculo.add(botaoSair);
 		botaoSair.setFont(new Font("Tahoma", Font.BOLD, 11));
 		botaoSair.addMouseListener(new MouseAdapter() {
@@ -234,6 +233,7 @@ public class MenuPrincipal extends JFrame {
 			public void mouseReleased(MouseEvent e) {
 				try {
 					CadastroEntrega dialog = new CadastroEntrega();
+
 					dialog.setControleCadastro(controleCadastro);
 
 					dialog.setModal(true);
@@ -251,38 +251,51 @@ public class MenuPrincipal extends JFrame {
 		});
 
 		JLabel lblRelatorio = new JLabel("Relat\u00F3rio");
-		lblRelatorio.setBounds(305, 285, 20, 16);
+		lblRelatorio.setBounds(304, 322, 20, 16);
 		panelCadastroEntrega.add(lblRelatorio);
 		lblRelatorio.setIcon(new ImageIcon(
 				"X:\\Usu\u00E1rios\\Alexandre Casagrande\\Desktop\\Java\\Prova N2 Programa\u00E7\u00E3o 1\\src\\transportadora\\n2\\iconRelatorioEntregasPorPlaca16px.png"));
 		lblRelatorio.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 		JButton botaoRelatorioEntregasPlaca = new JButton("Relatório de entregas por placa");
-		botaoRelatorioEntregasPlaca.setBounds(10, 286, 285, 20);
+		botaoRelatorioEntregasPlaca.setBounds(10, 321, 285, 20);
 		panelCadastroEntrega.add(botaoRelatorioEntregasPlaca);
+
 		botaoRelatorioEntregasPlaca.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
-				
-				RelatorioEntregaPlaca dialog = new RelatorioEntregaPlaca();
-				
-				dialog.setControleCadastro(controleCadastro);
 
-				dialog.setModal(true);
+				RelatorioEntregaPlaca dialogRelatorio = new RelatorioEntregaPlaca();
 
-				dialog.setVisible(true);
-				
-				//JOptionPane.showMessageDialog(null, controleCadastro.getListaEntregasPlaca());
+				dialogRelatorio.setControleCadastroRelatorio(controleCadastro);
+
+				dialogRelatorio.setModal(true);
+
+				dialogRelatorio.setVisible(true);
 			}
 		});
 		botaoRelatorioEntregasPlaca.setFont(new Font("Tahoma", Font.BOLD, 11));
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 312, 314, 160);
-		panelCadastroEntrega.add(scrollPane);
-		
-		JTextArea txtrNovaAtualizao = new JTextArea();
-		scrollPane.setViewportView(txtrNovaAtualizao);
-		txtrNovaAtualizao.setText("Nova atualiza\u00E7\u00E3o: \u00C9 necess\u00E1rio adicionar uma nova view, que vai ter os componentes de: \r\n* JTable, com os atributos c\u00F3digo entrega, placa e dist\u00E2ncia cadastrados de entrega que ser\u00E3o necess\u00E1rios para gerar o relat\u00F3rio caso o usu\u00E1rio solicite que o sistema gere um relat\u00F3r\u00EDo e o mesmo especifique qual placa ele quer que seja elaborado um relat\u00F3rio de entregas por placa.\r\n* JList ou JText, com os dados conforme o usu\u00E1rio solicitar o relat\u00F3rio de entregas por placa, que s\u00E3o a m\u00E9dia de dist\u00E2ncia, quantidade de entregas, o n\u00FAmero da placa e o c\u00F3digo da entrega.\r\nConforme gerar um relat\u00F3rio, o sistema deve atualizar o componente JList ou JText com o resultado da opera\u00E7\u00E3o de elabora\u00E7\u00E3o do relat\u00F3rio.\r\nConforme adicionar uma nova entrega, o componente de JTable deve ser atualizado com os atributos de entrega conforme mencionado no primeiro par\u00E1grafo.");
+
+		JButton button = new JButton("Sair");
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				setVisible(false);
+				controleCadastro.closeFileVeiculos();
+				controleCadastro.closeFileEntregas();
+				System.exit(0);
+			}
+		});
+		button.setFont(new Font("Tahoma", Font.BOLD, 11));
+		button.setBounds(10, 352, 285, 20);
+		panelCadastroEntrega.add(button);
+
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon(
+				"X:\\Usu\u00E1rios\\Alexandre Casagrande\\Desktop\\Java\\Prova N2 Programa\u00E7\u00E3o 1\\src\\transportadora\\n2\\iconSairMenuPrincipal16px.png"));
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		label.setBounds(304, 352, 20, 20);
+		panelCadastroEntrega.add(label);
 
 		addWindowListener(new WindowAdapter() {
 			public void windowOpened(WindowEvent e) {
@@ -296,6 +309,7 @@ public class MenuPrincipal extends JFrame {
 				textAreaArquivoDeEntregas.setText(controleCadastro.getListagemArquivoEntregas());
 
 			}
+
 			@Override
 			public void windowClosed(WindowEvent e) {
 				System.exit(0);

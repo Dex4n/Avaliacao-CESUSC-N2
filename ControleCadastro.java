@@ -23,6 +23,12 @@ public class ControleCadastro {
 	private Formatter outputEntregas;
 	private Scanner inputVeiculos;
 	private Scanner inputEntregas;
+	private double totalDistanciaAux;
+	private double mediaDistanciaAux;
+	private int quantidadeEntregasAux;
+	private EntregasPlaca relatorioEntregasPlaca;
+
+	private boolean saoIguais = false;
 
 	public ControleCadastro() {
 		super();
@@ -37,42 +43,49 @@ public class ControleCadastro {
 	public void adicionaVeiculo(Veiculo newVeiculo) {
 		listaVeiculos.add(newVeiculo);
 	}
-	
-	// Gera o relatório de entregas (por placa), junto com a média de distância das entregas (por placa) e quantidade de entregas (por placa)
-	public String getListaEntregasPlaca() {
-		
-		String placaSolicitada = "";
-		Double mediaDistancia = 0.0;
-		Double totalDistancia = 0.0;
-		Integer quantidadeEntregas = 0;
-		boolean elIguais = false; 
 
-		placaSolicitada = JOptionPane.showInputDialog("Digite a placa que você deseja extrair um relatório: ");
+	// Gera o relatório de entregas (por placa), junto com a média de distância das
+	// entregas (por placa) e quantidade de entregas (por placa)
+	public void gerarListaEntregasPlaca(String placaSolicitada) {
 
-		for (int i = 0; i < listaEntregas.size(); i++) 
-		{ 
+		EntregasPlaca newRelatorioEntregasPlaca = new EntregasPlaca();
+
+		for (int i = 0; i < listaEntregas.size(); i++) {
 			if (listaEntregas.get(i).getPlacaVeiculo().equals(placaSolicitada)) {
-				totalDistancia += listaEntregas.get(i).getDistanciaEntrega();
-				quantidadeEntregas += 1;
-				elIguais = true;
-			} else elIguais = false;	
-		}
-		
-		// Procedimento para cálculo da média de distância por placa, tendo como base a soma total de distância das entregas dividido pela quantidade de entregas
-		mediaDistancia = totalDistancia / quantidadeEntregas;
-		
-		if (elIguais == false) {
-			listaEntregasPlaca = "Aviso: Não há nenhuma entrega cadastrada com esse número de placa: " + placaSolicitada + ".";
-		} else {
-			listaEntregasPlaca = "Placa " + placaSolicitada + ",\n"
-					+ "Média: " + mediaDistancia + " KM de distância,\n"
-					+ "Total de " + quantidadeEntregas + " entregas.";
+
+				this.totalDistanciaAux += listaEntregas.get(i).getDistanciaEntrega();
+
+				this.quantidadeEntregasAux += 1;
+
+				saoIguais = true;
+			} else
+				saoIguais = false;
 		}
 
-		return listaEntregasPlaca;
+		// Procedimento para cálculo da média de distância por placa, tendo como base a
+		// soma total de distância das entregas dividido pela quantidade de entregas
+
+		mediaDistanciaAux = totalDistanciaAux / quantidadeEntregasAux;
+
+		newRelatorioEntregasPlaca.setTotalDistancia(totalDistanciaAux);
+		newRelatorioEntregasPlaca.setQuantidadeEntregas(quantidadeEntregasAux);
+		newRelatorioEntregasPlaca.setMediaDistancia(mediaDistanciaAux);
+
+		if (saoIguais == false) {
+
+			this.listaEntregasPlaca = "Aviso: Não há mais que uma entrega cadastrada com esse número de placa: "
+					+ placaSolicitada + ".";
+		} else {
+			this.listaEntregasPlaca = "Placa " + placaSolicitada + ",\n" + "Média: "
+					+ newRelatorioEntregasPlaca.getMediaDistancia() + " KM de distância,\n" + "Total de "
+					+ newRelatorioEntregasPlaca.getQuantidadeEntregas() + " entregas.";
+		}
+
+		setRelatorioEntregasPlaca(newRelatorioEntregasPlaca);
 	}
-	
-	// Mostra as informações da lista de veículos (conforme instanciado) no componente de JTABLE da aba de Cadastro de Veículos
+
+	// Mostra as informações da lista de veículos (conforme instanciado) no
+	// componente de JTABLE da aba de Cadastro de Veículos
 	public String[][] getListaVeiculos() {
 		String[][] matAux = new String[listaVeiculos.size()][3];
 		for (int j = 0; j < listaVeiculos.size(); j++) {
@@ -84,8 +97,9 @@ public class ControleCadastro {
 		}
 		return matAux;
 	}
-	
-	// Mostra as informações da lista de entregas (conforme instanciado) no componente de JTABLE da aba de Cadastro de Entregas
+
+	// Mostra as informações da lista de entregas (conforme instanciado) no
+	// componente de JTABLE da aba de Cadastro de Entregas
 	public String[][] getListaEntregas() {
 		String[][] matAux = new String[listaEntregas.size()][3];
 		for (int j = 0; j < listaEntregas.size(); j++) {
@@ -150,7 +164,7 @@ public class ControleCadastro {
 					registroVeiculo.getPlacaVeiculo(), registroVeiculo.getNomeVeiculo(),
 					registroVeiculo.getMarcaVeiculo(), registroVeiculo.getAnoVeiculo());
 			JOptionPane.showMessageDialog(null, "Listagem de veículos salvo em arquivo com sucesso!");
-			
+
 		} catch (FormatterClosedException formatterClosedException) {
 			System.err.println("Erro ao escrever no arquivo de veículos.");
 			return;
@@ -164,7 +178,7 @@ public class ControleCadastro {
 					registroEntrega.getDescricaoProduto(), registroEntrega.getDescricaoDestino(),
 					registroEntrega.getDistanciaEntrega(), registroEntrega.getPlacaVeiculo());
 			JOptionPane.showMessageDialog(null, "Listagem de entregas salvo em arquivo com sucesso!");
-			
+
 		} catch (FormatterClosedException formatterClosedException) {
 			System.err.println("Erro ao escrever no arquivo de entregas.");
 			return;
@@ -178,7 +192,7 @@ public class ControleCadastro {
 		String listaVeiculos = new String();
 
 		try // Lê os registros do arquivo usando Scanner object
-		{	
+		{
 			while (inputVeiculos.hasNext()) {
 				Veiculo registroVeiculo = new Veiculo();
 
@@ -210,7 +224,7 @@ public class ControleCadastro {
 
 		ArrayList<Entrega> retornoEntrega = new ArrayList<Entrega>();
 		String listaEntregas = new String();
-		
+
 		try // Lê os registros do arquivo usando Scanner object
 		{
 			while (inputEntregas.hasNext()) {
@@ -224,7 +238,7 @@ public class ControleCadastro {
 
 				retornoEntrega.add(registroEntrega);
 				listaEntregas += retornoEntrega + "";
-				
+
 			}
 			setListagemArquivoEntregas(listaEntregas);
 			return retornoEntrega;
@@ -240,7 +254,8 @@ public class ControleCadastro {
 		}
 	} // Final do método readRecordsEntregas
 
-	// Método closeFile é responsável por fechar os arquivos tanto para escrita quanto para leitura.
+	// Método closeFile é responsável por fechar os arquivos tanto para escrita
+	// quanto para leitura.
 	public void closeFileVeiculos() {
 		if (outputVeiculos != null)
 			outputVeiculos.close();
@@ -260,17 +275,6 @@ public class ControleCadastro {
 		return listaEntregas.size();
 	}
 
-
-	public void apagarListaEntregas() {
-		listaEntregas.clear();
-		JOptionPane.showMessageDialog(null, "Lista de cadastro de entregas apagado com sucesso!");
-	}
-
-	public void apagarListaVeiculos() {
-		listaVeiculos.clear();
-		JOptionPane.showMessageDialog(null, "Lista de cadastro de veículos apagado com sucesso!");
-	}
-
 	public String getListagemArquivoVeiculos() {
 		return listagemArquivoVeiculos;
 	}
@@ -287,4 +291,11 @@ public class ControleCadastro {
 		this.listagemArquivoEntregas = listagemArquivoEntregas;
 	}
 
+	public EntregasPlaca getRelatorioEntregasPlaca() {
+		return relatorioEntregasPlaca;
+	}
+
+	public void setRelatorioEntregasPlaca(EntregasPlaca relatorioEntregasPlaca) {
+		this.relatorioEntregasPlaca = relatorioEntregasPlaca;
+	}
 }
