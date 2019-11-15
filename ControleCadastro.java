@@ -50,12 +50,27 @@ public class ControleCadastro {
 
 		EntregasPlaca newRelatorioEntregasPlaca = new EntregasPlaca();
 
+		
+		this.totalDistanciaAux = 0.0;
+		this.quantidadeEntregasAux = 0;
+		
+		
 		for (int i = 0; i < listaEntregas.size(); i++) {
 			if (listaEntregas.get(i).getPlacaVeiculo().equals(placaSolicitada)) {
+				
+				
+				
 
 				this.totalDistanciaAux += listaEntregas.get(i).getDistanciaEntrega();
-
-				this.quantidadeEntregasAux += 1;
+				
+				if (this.totalDistanciaAux > 0) {
+					this.quantidadeEntregasAux += 1;
+				}
+				
+				
+		// Observação: 
+		// Bug: Como os atributos auxiliarem foram declarados globalmente, o sistema continua incrementando a quantidade de entregas,
+		// entretanto, para correção do mesmo seria necessário declarar os mesmo de forma local, para que o valor atribuído seja limpo.
 
 				saoIguais = true;
 			} else
@@ -202,6 +217,8 @@ public class ControleCadastro {
 				registroVeiculo.setMarcaVeiculo(inputVeiculos.next()); // Lê a marca do veículo
 				registroVeiculo.setAnoVeiculo(inputVeiculos.nextInt()); // Lê o ano do veículo
 
+				this.listaVeiculos.add(registroVeiculo);
+				
 				retornoVeiculo.add(registroVeiculo);
 				listaVeiculos += retornoVeiculo + "";
 			}
@@ -236,6 +253,8 @@ public class ControleCadastro {
 				registroEntrega.setDistanciaEntrega(inputEntregas.nextDouble()); // Lê a distância de entrega da entrega
 				registroEntrega.setPlacaVeiculo(inputEntregas.next()); // Lê a placa do veículo da entrega
 
+				this.listaEntregas.add(registroEntrega);
+				
 				retornoEntrega.add(registroEntrega);
 				listaEntregas += retornoEntrega + "";
 

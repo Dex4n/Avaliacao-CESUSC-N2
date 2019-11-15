@@ -66,14 +66,14 @@ public class RelatorioEntregaPlaca extends JDialog {
 		contentPanel.add(lblPlacaRelatorio);
 		
 		JLabel lblSair = new JLabel("");
-		lblSair.setIcon(new ImageIcon("X:\\Usu\u00E1rios\\Alexandre Casagrande\\Desktop\\Java\\Prova N2 Programa\u00E7\u00E3o 1\\src\\transportadora\\n2\\iconSairMenuPrincipal16px.png"));
+		lblSair.setIcon(new ImageIcon("C:\\Users\\ADS\\Desktop\\Java - Ling Prog I\\Prova N2\\src\\transportadora\\n2\\iconSairMenuPrincipal16px.png"));
 		lblSair.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSair.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblSair.setBounds(294, 230, 20, 20);
 		contentPanel.add(lblSair);
 		
 		JLabel lblRelatorio = new JLabel("");
-		lblRelatorio.setIcon(new ImageIcon("X:\\Usu\u00E1rios\\Alexandre Casagrande\\Desktop\\Java\\Prova N2 Programa\u00E7\u00E3o 1\\src\\transportadora\\n2\\iconRelatorioEntregasPorPlaca16px.png"));
+		lblRelatorio.setIcon(new ImageIcon("C:\\Users\\ADS\\Desktop\\Java - Ling Prog I\\Prova N2\\src\\transportadora\\n2\\iconRelatorioEntregasPorPlaca16px.png"));
 		lblRelatorio.setHorizontalAlignment(SwingConstants.CENTER);
 		lblRelatorio.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblRelatorio.setBounds(294, 199, 20, 20);

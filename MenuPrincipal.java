@@ -139,8 +139,7 @@ public class MenuPrincipal extends JFrame {
 		JLabel lblSQL = new JLabel("");
 		lblSQL.setBounds(304, 290, 20, 20);
 		panelCadastroVeiculo.add(lblSQL);
-		lblSQL.setIcon(new ImageIcon(
-				"X:\\Usu\u00E1rios\\Alexandre Casagrande\\Desktop\\Java\\Prova N2 Programa\u00E7\u00E3o 1\\src\\transportadora\\n2\\iconSQL16px.png"));
+		lblSQL.setIcon(new ImageIcon("C:\\Users\\ADS\\Desktop\\Java - Ling Prog I\\Prova N2\\src\\transportadora\\n2\\iconSQL16px.png"));
 		lblSQL.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSQL.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
@@ -152,8 +151,7 @@ public class MenuPrincipal extends JFrame {
 		JLabel lblGitHub = new JLabel("");
 		lblGitHub.setBounds(304, 321, 20, 20);
 		panelCadastroVeiculo.add(lblGitHub);
-		lblGitHub.setIcon(new ImageIcon(
-				"X:\\Usu\u00E1rios\\Alexandre Casagrande\\Desktop\\Java\\Prova N2 Programa\u00E7\u00E3o 1\\src\\transportadora\\n2\\iconGitHubDex4n16px.png"));
+		lblGitHub.setIcon(new ImageIcon("C:\\Users\\ADS\\Desktop\\Java - Ling Prog I\\Prova N2\\src\\transportadora\\n2\\iconGitHubDex4n16px.png"));
 		lblGitHub.setHorizontalAlignment(SwingConstants.CENTER);
 		lblGitHub.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
@@ -165,8 +163,7 @@ public class MenuPrincipal extends JFrame {
 		JLabel lblSair = new JLabel("");
 		lblSair.setBounds(304, 352, 20, 20);
 		panelCadastroVeiculo.add(lblSair);
-		lblSair.setIcon(new ImageIcon(
-				"X:\\Usu\u00E1rios\\Alexandre Casagrande\\Desktop\\Java\\Prova N2 Programa\u00E7\u00E3o 1\\src\\transportadora\\n2\\iconSairMenuPrincipal16px.png"));
+		lblSair.setIcon(new ImageIcon("C:\\Users\\ADS\\Desktop\\Java - Ling Prog I\\Prova N2\\src\\transportadora\\n2\\iconSairMenuPrincipal16px.png"));
 		lblSair.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSair.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
@@ -253,8 +250,7 @@ public class MenuPrincipal extends JFrame {
 		JLabel lblRelatorio = new JLabel("Relat\u00F3rio");
 		lblRelatorio.setBounds(304, 322, 20, 16);
 		panelCadastroEntrega.add(lblRelatorio);
-		lblRelatorio.setIcon(new ImageIcon(
-				"X:\\Usu\u00E1rios\\Alexandre Casagrande\\Desktop\\Java\\Prova N2 Programa\u00E7\u00E3o 1\\src\\transportadora\\n2\\iconRelatorioEntregasPorPlaca16px.png"));
+		lblRelatorio.setIcon(new ImageIcon("C:\\Users\\ADS\\Desktop\\Java - Ling Prog I\\Prova N2\\src\\transportadora\\n2\\iconRelatorioEntregasPorPlaca16px.png"));
 		lblRelatorio.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 		JButton botaoRelatorioEntregasPlaca = new JButton("Relatório de entregas por placa");
@@ -290,8 +286,7 @@ public class MenuPrincipal extends JFrame {
 		panelCadastroEntrega.add(button);
 
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(
-				"X:\\Usu\u00E1rios\\Alexandre Casagrande\\Desktop\\Java\\Prova N2 Programa\u00E7\u00E3o 1\\src\\transportadora\\n2\\iconSairMenuPrincipal16px.png"));
+		label.setIcon(new ImageIcon("C:\\Users\\ADS\\Desktop\\Java - Ling Prog I\\Prova N2\\src\\transportadora\\n2\\iconSairMenuPrincipal16px.png"));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		label.setBounds(304, 352, 20, 20);
@@ -306,7 +301,16 @@ public class MenuPrincipal extends JFrame {
 				controleCadastro.readRecordsEntregas();
 
 				textAreaArquivoDeVeiculos.setText(controleCadastro.getListagemArquivoVeiculos());
+				
+				tableVeiculos.setModel(new DefaultTableModel(controleCadastro.getListaVeiculos(),
+						new String[] { "Código Veículo", "Placa Veículo", "Nome Veículo" }));
+				
 				textAreaArquivoDeEntregas.setText(controleCadastro.getListagemArquivoEntregas());
+				
+				tableEntregas.setModel(new DefaultTableModel(controleCadastro.getListaEntregas(),
+						new String[] { "Código Entrega", "Produto Entrega", "Placa Entrega" }));
+				
+				
 
 			}
 
